@@ -19,7 +19,9 @@ class ItemTableSeeder extends Seeder
             'status' => 1,
             'price' => rand(0,500),
             'created_by' => str_random(10),
-            'updated_by' => str_random(10)
+            'updated_by' => str_random(10),
+            'created_at' => time(),
+            'updated_at' => time()
         ]);
     }
 }

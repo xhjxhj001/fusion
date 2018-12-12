@@ -35,7 +35,6 @@ class CreateLsrTable extends Migration
                 ->default(0.00)
                 ->comment('the price of the item');
             $this->creators($table);
-            $table->timestamps();
         });
     }
 
@@ -63,5 +62,13 @@ class CreateLsrTable extends Migration
             ->nullable(false)
             ->default('')
             ->comment('the operator of updating');
+        $table->unsignedInteger('created_at')
+            ->nullable(false)
+            ->default(0)
+            ->comment('the timestamp of creation');
+        $table->unsignedInteger('updated_at')
+            ->nullable(false)
+            ->default(0)
+            ->comment('the timestamp of updating');
     }
 }
