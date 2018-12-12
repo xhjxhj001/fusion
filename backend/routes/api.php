@@ -16,5 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+/**
+ * get Item info by Id
+ */
 Route::get('/item/{id}', 'Api\ItemController@getItemInfo');
+
+/**
+ * get Item list
+ */
+Route::get('/itemlist', 'Api\ItemController@getItemList');

@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-trait BaseController
+abstract class BaseController extends Controller
 {
     protected $errno = 0;
     protected $errmsg = 'success';
@@ -20,4 +20,5 @@ trait BaseController
         $res['data'] = $data;
         return json_encode($res);
     }
+
 }

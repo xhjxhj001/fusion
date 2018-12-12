@@ -29,18 +29,24 @@ class Item extends Model
      */
     public static function getItemInfoById($id)
     {
-        $res =  self::where('id', $id)->first();
-        if($res){
-            $data = array(
-                'id' => $res['id'],
-                'name' => $res['name'],
-                'description' => $res['description'],
-                'image' => $res['image'],
-                'status' => $res['status'],
-                'price' => $res['price'],
-            );
-            return $data;
-        }else{
+        $res = self::where('id', $id)
+            ->select('name', 'description', 'image', 'status', 'price')
+            ->first();
+        if ($res) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getItemListByConds($conds)
+    {
+        $res = self::where($conds)
+            ->select('name', 'description', 'image', 'status', 'price')
+            ->get();
+        if ($res) {
+            return $res;
+        } else {
             return false;
         }
     }
