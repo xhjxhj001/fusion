@@ -32,12 +32,12 @@ class Item extends Model
         $res =  self::where('id', $id)->first();
         if($res){
             $data = array(
-                'id',
-                'name',
-                'description',
-                'image',
-                'status',
-                'price',
+                'id' => $res['id'],
+                'name' => $res['name'],
+                'description' => $res['description'],
+                'image' => $res['image'],
+                'status' => $res['status'],
+                'price' => $res['price'],
             );
             return $data;
         }else{
