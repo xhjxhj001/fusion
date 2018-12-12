@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Psy\CodeCleaner\AbstractClassPass;
 
 class Item extends Model
 {
@@ -33,6 +34,11 @@ class Item extends Model
             ->select('name', 'description', 'image', 'status', 'price')
             ->first();
         if ($res) {
+            foreach ($res as &$item){
+                if(substr($item['price'], -2) == '00'){
+                    $item['price'] = substr($item['price'], 0, strlen($item['price']) - 3);
+                };
+            }
             return $res;
         } else {
             return false;
@@ -45,6 +51,11 @@ class Item extends Model
             ->select('name', 'description', 'image', 'status', 'price')
             ->get();
         if ($res) {
+            foreach ($res as &$item){
+                if(substr($item['price'], -2) == '00'){
+                    $item['price'] = substr($item['price'], 0, strlen($item['price']) - 3);
+                };
+            }
             return $res;
         } else {
             return false;
