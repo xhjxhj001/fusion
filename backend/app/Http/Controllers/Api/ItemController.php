@@ -13,7 +13,7 @@ class ItemController extends Controller
 
     public function getItemInfo($id, Request $request)
     {
-        $info = Item::where('id', $id)->first();
+        $info = Item::getItemInfoById($id);
         if($info){
             return $this->returnJson($info);
         }else{

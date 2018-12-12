@@ -22,4 +22,27 @@ class Item extends Model
         'updated_at'
     );
 
+    /**
+     * get Item info from DB
+     * @param $id
+     * @return array|bool
+     */
+    public static function getItemInfoById($id)
+    {
+        $res =  self::where('id', $id)->first();
+        if($res){
+            $data = array(
+                'id',
+                'name',
+                'description',
+                'image',
+                'status',
+                'price',
+            );
+            return $data;
+        }else{
+            return false;
+        }
+    }
+
 }
