@@ -42,7 +42,7 @@ services:
     command: --requirepass ${REDIS_PASSWORD}
   php:
     container_name: ${APP_NAME}_php
-    image: php:fpm-alpine
+    image: xhjxhj001/php:fpm-alpine
     ports:
     - "${PHP_PORT}:9000"
     volumes:
