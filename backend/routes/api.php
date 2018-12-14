@@ -17,11 +17,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 /**
- * get Item info by Id
+ * get item info by id
  */
 Route::get('/item/{id}', 'Api\ItemController@getItemInfo');
 
 /**
- * get Item list
+ * get item list
  */
 Route::get('/itemlist', 'Api\ItemController@getItemList');
+
+/**
+ * get item reecommend list
+ */
+Route::get('/itemrecommendlist', 'Api\ItemController@getRecommendList');
+
+/**
+ * get item category list
+ */
+Route::get('/itemcategorylist', 'Api\ItemCategoryController@getItemCategoryList');

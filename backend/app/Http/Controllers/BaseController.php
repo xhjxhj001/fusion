@@ -8,16 +8,20 @@
 
 namespace App\Http\Controllers;
 
-abstract class BaseController extends Controller
+
+class BaseController extends Controller
 {
     protected $errno = 0;
     protected $errmsg = 'success';
+    protected $resArr = array();
 
     protected function returnJson($data = null)
     {
         $res['errno'] = $this->errno;
         $res['errmsg'] = $this->errmsg;
-        $res['data'] = $data;
+        if($this->errno == 0){
+            $res['data'] = $data;
+        }
         return json_encode($res);
     }
 

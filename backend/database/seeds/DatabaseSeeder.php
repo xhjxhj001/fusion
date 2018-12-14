@@ -11,7 +11,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-         $this->call(ItemTableSeeder::class);
+        $this->call(ItemTableSeeder::class);
+        $this->call(ItemCategoryTableSeeder::class);
+    }
+
+    public static function generateCreatorAndTimestamp($faker)
+    {
+        return [
+            'created_by' => $faker->userName,
+            'updated_by' => $faker->userName,
+            'created_at' => $faker->unixTime(),
+            'updated_at' => $faker->unixTime()
+        ];
     }
 }

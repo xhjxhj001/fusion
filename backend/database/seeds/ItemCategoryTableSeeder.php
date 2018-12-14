@@ -1,8 +1,8 @@
 <?php
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
-class ItemTableSeeder extends Seeder
+class ItemCategoryTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class ItemTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Model\Item::class, 50)->create();
+        factory(App\Model\ItemCategory::class, 3)->create();
     }
 }

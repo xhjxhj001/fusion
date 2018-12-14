@@ -13,12 +13,17 @@ class CreateLsrTable extends Migration
      */
     public function up()
     {
+        // create item table
         Schema::create('item', function (Blueprint $table) {
             $table->bigIncrements('id')->nullable(false); // primary key
             $table->string('name', 255)
                 ->nullable(false)
                 ->default('')
                 ->comment('the name of the item'); // item name
+            $table->unsignedSmallInteger('category_id')
+                ->nullable(false)
+                ->default(0)
+                ->comment('the category_id of the item');
             $table->string('description', 1000)
                 ->nullable(false)
                 ->default('')
@@ -36,6 +41,20 @@ class CreateLsrTable extends Migration
                 ->comment('the price of the item');
             $this->creators($table);
         });
+
+        // create item_category table
+        Schema::create('item_category', function (Blueprint $table) {
+            $table->bigIncrements('id')->nullable(false); // primary key
+            $table->string('title', 255)
+                ->nullable(false)
+                ->default('')
+                ->comment('the title of the category'); // category title
+            $table->TinyInteger('status')
+                ->nullable(false)
+                ->default(0)
+                ->comment('-1: deleted 0: offline 1: online');
+            $this->creators($table);
+        });
     }
 
     /**
@@ -46,6 +65,7 @@ class CreateLsrTable extends Migration
     public function down()
     {
         Schema::dropIfExists('item');
+        Schema::dropIfExists('item_category');
     }
 
     /**

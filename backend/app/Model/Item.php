@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Psy\CodeCleaner\AbstractClassPass;
 
 class Item extends Model
 {
@@ -11,8 +10,11 @@ class Item extends Model
 
     protected $primaryKey = 'id';
 
+    public $timestamps = false;
+
     protected $fillable = array(
         'name',
+        'category_id',
         'description',
         'image',
         'status',
@@ -31,31 +33,26 @@ class Item extends Model
     public static function getItemInfoById($id)
     {
         $res = self::where('id', $id)
-            ->select('name', 'description', 'image', 'status', 'price')
+            ->select('id', 'name', 'category_id', 'description', 'image', 'status', 'price')
             ->first();
         if ($res) {
-            foreach ($res as &$item){
-                if(substr($item['price'], -2) == '00'){
-                    $item['price'] = substr($item['price'], 0, strlen($item['price']) - 3);
-                };
-            }
             return $res;
         } else {
             return false;
         }
     }
 
+    /**
+     * get item list from DB
+     * @param $conds
+     * @return bool | array
+     */
     public static function getItemListByConds($conds)
     {
         $res = self::where($conds)
-            ->select('name', 'description', 'image', 'status', 'price')
+            ->select('id', 'name', 'category_id', 'description', 'image', 'status', 'price')
             ->get();
         if ($res) {
-            foreach ($res as &$item){
-                if(substr($item['price'], -2) == '00'){
-                    $item['price'] = substr($item['price'], 0, strlen($item['price']) - 3);
-                };
-            }
             return $res;
         } else {
             return false;
