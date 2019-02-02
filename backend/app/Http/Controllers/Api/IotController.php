@@ -67,7 +67,7 @@ class IotController extends BaseController
         );
         $res = $this->request_post("http://localhost:8080/api/v3/mqtt/subscribe", json_encode($body), $arr_header);
         if ($res['code'] === 0) {
-            $this->returnJson();
+            $this->returnJson($res);
         } else {
             $this->errno = -1;
             $this->errmsg = '操作失败';
