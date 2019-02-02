@@ -31,7 +31,7 @@ class IotController extends BaseController
     }
 
 
-    public function setIot(Request $request)
+    public function pubMqtt(Request $request)
     {
         $arr_header[] = "Content-Type:application/json";
         $appId = getenv("EMQ_APP_ID");
@@ -45,6 +45,27 @@ class IotController extends BaseController
             'client_id' => $request['client_id']
         );
         $res = $this->request_post("http://localhost:8080/api/v3/mqtt/publish", json_encode($body), $arr_header);
+        if ($res['code'] === 0) {
+            $this->returnJson();
+        } else {
+            $this->errno = -1;
+            $this->errmsg = '操作失败';
+            $this->returnJson();
+        }
+    }
+
+    public function subMqtt(Request $request)
+    {
+        $arr_header[] = "Content-Type:application/json";
+        $appId = getenv("EMQ_APP_ID");
+        $secret = getenv("EMQ_APP_SECRET");
+        $arr_header[] = "Authorization: Basic " . base64_encode($appId . ':' . $secret);
+        $body = array(
+            'topic' => $request['topic'],
+            'payload' => $request['payload'],
+            'qos' => $request['qos'],
+        );
+        $res = $this->request_post("http://localhost:8080/api/v3/mqtt/subscribe", json_encode($body), $arr_header);
         if ($res['code'] === 0) {
             $this->returnJson();
         } else {
