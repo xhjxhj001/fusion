@@ -30,7 +30,22 @@ class IotController extends BaseController
         return $this->returnJson('success');
     }
 
+    /**
+     * 获取设备状态
+     * @param $id
+     * @return false|string
+     */
+    public function getMqtt($id)
+    {
+        $status = Redis::get('device_status' . $id);
+        $data = $status;
+        return $this->returnJson($data);
+    }
 
+    /**
+     * 发布mqtt消息
+     * @param Request $request
+     */
     public function pubMqtt(Request $request)
     {
         $arr_header[] = "Content-Type:application/json";
@@ -46,6 +61,7 @@ class IotController extends BaseController
         );
         $res = $this->request_post("http://localhost:8080/api/v3/mqtt/publish", json_encode($body), $arr_header);
         if ($res['code'] === 0) {
+            Redis::set('device_status' . $request['topic'], $request['payload']);
             $this->returnJson();
         } else {
             $this->errno = -1;
@@ -54,6 +70,10 @@ class IotController extends BaseController
         }
     }
 
+    /**
+     * 订阅mqtt消息
+     * @param Request $request
+     */
     public function subMqtt(Request $request)
     {
         $arr_header[] = "Content-Type:application/json";
@@ -62,8 +82,8 @@ class IotController extends BaseController
         $arr_header[] = "Authorization: Basic " . base64_encode($appId . ':' . $secret);
         $body = array(
             'topic' => $request['topic'],
-            'payload' => $request['payload'],
             'qos' => $request['qos'],
+            'client_id' => $request['client_id']
         );
         $res = $this->request_post("http://localhost:8080/api/v3/mqtt/subscribe", json_encode($body), $arr_header);
         if ($res['code'] === 0) {
