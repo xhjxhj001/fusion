@@ -37,4 +37,4 @@ Route::get('/itemrecommendlist', 'Api\ItemController@getRecommendList');
 Route::get('/itemcategorylist', 'Api\ItemCategoryController@getItemCategoryList');
 Route::get('/iot/monitor/{id}', 'Api\IotController@getMonitorInfo');
 Route::post('/iot/monitor/{id}', 'Api\IotController@setMonitorInfo');
-Route::post('/mqtt', 'Api\IotController@iotSet');
+Route::post('/mqtt', 'Api\IotController@setIot');
