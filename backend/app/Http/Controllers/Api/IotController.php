@@ -44,10 +44,10 @@ class IotController extends BaseController
             'retain' => $request['retain'],
             'client_id' => $request['client_id']
         );
-        $res = $this->request_post("http://localhost:8080/api/v3/mqtt/publish", $body, $arr_header);
-        if($res['code'] === 0){
+        $res = $this->request_post("http://localhost:8080/api/v3/mqtt/publish", json_encode($body), $arr_header);
+        if ($res['code'] === 0) {
             $this->returnJson();
-        }else{
+        } else {
             $this->errno = -1;
             $this->errmsg = '操作失败';
             $this->returnJson();
@@ -69,9 +69,9 @@ class IotController extends BaseController
         Log::info("[curl-request][url]:" . $url . "[body]:" . $param);
         $curlPost = $param;
         $ch = curl_init();//初始化curl
-        curl_setopt($ch, CURLOPT_URL,$postUrl);//抓取指定网页
+        curl_setopt($ch, CURLOPT_URL, $postUrl);//抓取指定网页
         curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
-        if(!empty($header)){
+        if (!empty($header)) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
