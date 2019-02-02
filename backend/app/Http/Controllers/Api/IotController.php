@@ -61,7 +61,8 @@ class IotController extends BaseController
         );
         $res = $this->request_post("http://localhost:8080/api/v3/mqtt/publish", json_encode($body), $arr_header);
         if ($res['code'] === 0) {
-            Redis::set('device_status' . $request['topic'], $request['payload']);
+            $device_num = DeviceList::$device_list[$request['topic']];
+            Redis::set('device_status' . $device_num, $request['payload']);
             $this->returnJson();
         } else {
             $this->errno = -1;
