@@ -37,9 +37,21 @@ class IotController extends BaseController
         $appId = getenv("EMQ_APP_ID");
         $secret = getenv("EMQ_APP_SECRET");
         $arr_header[] = "Authorization: Basic " . base64_encode($appId . ':' . $secret);
-
-        $res = $this->request_post("localhost:8080", $request, $arr_header);
-        var_dump($request, $res);
+        $body = array(
+            'topic' => $request['topic'],
+            'payload' => $request['payload'],
+            'qos' => $request['qos'],
+            'retain' => $request['retain'],
+            'client_id' => $request['client_id']
+        );
+        $res = $this->request_post("http://localhost:8080/api/v3/mqtt/publish", $body, $arr_header);
+        if($res['code'] === 0){
+            $this->returnJson();
+        }else{
+            $this->errno = -1;
+            $this->errmsg = '操作失败';
+            $this->returnJson();
+        }
     }
 
     /**
